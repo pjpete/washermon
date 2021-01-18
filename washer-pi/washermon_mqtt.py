@@ -47,6 +47,7 @@ def setup():
     ret=mqttClient.publish("Basement/Washer/Done","0")
 
 def in_progress():
+	pass
 #    print 'Cycle In Progress'
 
 def loop():
