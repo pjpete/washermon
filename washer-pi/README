@@ -1,1 +1,4 @@
 These are the files for the Pi Zero that runs at the Washing Machine
+
+The washermon_mqtt.py script is installed as a systemd service.  It uses existing python scripts to get the photoresistor value from the A/D, and based on the status of the value, sends 'Done' MQTT message as 1 or 0
+
