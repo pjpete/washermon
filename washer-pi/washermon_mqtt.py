@@ -15,7 +15,7 @@ serverAddress = "10.0.0.16"
 port = 1883
 
 def on_publish(client,userdata,result):             #create function for callback
-    print("data published \n")
+#    print("data published \n")
     pass
 
 def connectionStatus(client, userdata, flags, rc):
@@ -24,7 +24,7 @@ def connectionStatus(client, userdata, flags, rc):
 def messageDecoder(client, userdata, msg):
     message = msg.payload.decode(encoding='UTF-8')
 
-    print("Yeppers")
+#    print("Yeppers")
 
 DO = 17
 GPIO.setmode(GPIO.BCM)
@@ -47,7 +47,7 @@ def setup():
     ret=mqttClient.publish("Basement/Washer/Done","0")
 
 def in_progress():
-    print 'Cycle In Progress'
+#    print 'Cycle In Progress'
 
 def loop():
     global mqttClient
@@ -58,21 +58,21 @@ def loop():
         done_led_status = ADC.read(0)
     #    done_led_status = 200
         if done_led_status > 220:
-            print 'Not Done, Value = ', done_led_status
+           # print 'Not Done, Value = ', done_led_status
             if(not_done_message_sent == 0):
                 ret=mqttClient.publish("Basement/Washer/Done","0")
                 not_done_message_sent = 0
             cycle_done = 0
             done_message_sent = 0
         else:
-            print 'Done!'
+           # print 'Done!'
             cycle_done = 1
 
             if (cycle_done == 1) and (done_message_sent == 0):
                 # Send message
                 ret=mqttClient.publish("Basement/Washer/Done","1")
                 done_message_sent = 0
-                print 'Message Sent!'
+           #     print 'Message Sent!'
             not_done_message_sent = 0
         time.sleep(5)
 
