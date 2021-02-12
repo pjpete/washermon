@@ -1,4 +1,4 @@
-washer-pi
+#washer-pi
 
 These are the files for the Pi Zero that runs at the Washing Machine
 
@@ -21,3 +21,32 @@ sudo apt-get install python-pip
 git clone https://github.com/adafruit/Adafruit_Python_BME280.git
 sudo apt-get install python-dev python-rpi.gpio
 sudo pip install Adafruit-GPIO
+
+
+Challenge in getting script to run automatically at powerup of Pi (or power reset)
+.bashrc tried first but was not always reliable
+/etc/rc.local 
+Ended up using systemd as the driver for the program.  Shout out to Dexter Industries for this great how-to
+https://www.dexterindustries.com/howto/run-a-program-on-your-raspberry-pi-at-startup/
+
+sudo vi /lib/systemd/system/washermon.service
+File contents:
+
+[Unit]
+Description=Washer Monitor Service
+After=multi-user.target
+
+[Service]
+Type=idle
+ExecStart=/usr/bin/python /home/pi/washermon/washer-pi/washermon_mqtt.py > /home/pi/washer-pi.log 2>&1
+
+[Install]
+WantedBy=multi-user.target
+
+
+
+sudo chmod 644 /lib/systemd/system/washermon.service
+sudo systemctl daemon-reload
+sudo systemctl enable washermon.service
+
+sudo reboot
