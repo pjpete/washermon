@@ -1,4 +1,23 @@
+washer-pi
+
 These are the files for the Pi Zero that runs at the Washing Machine
 
 The washermon_mqtt.py script is installed as a systemd service.  It uses existing python scripts to get the photoresistor value from the A/D, and based on the status of the value, sends 'Done' MQTT message as 1 or 0
 
+This part was done first.  Here are the steps as best as I can recall from bash history commands and other things rattling around in my head.
+
+Flashed SD card with Raspbian (previous name of Raspberry Pi OS) 'Stretch'.  Current version of Raspberry Pi OS should work too.
+Connected Pi to Monitor/Keyboard/Mouse.  
+Started up to GUI, went through general setup
+At GUI/Desktop, used Raspberry Pi Configuration:
+   Set hostname (washermon)
+   Boot to desktop
+   Autologin as user 'pi'
+   Enable Interfaces: SSH, VNC, SPI, I2C, Remote GPIO
+
+Command line magic
+sudo apt-get install python-dev
+sudo apt-get install python-pip
+git clone https://github.com/adafruit/Adafruit_Python_BME280.git
+sudo apt-get install python-dev python-rpi.gpio
+sudo pip install Adafruit-GPIO
